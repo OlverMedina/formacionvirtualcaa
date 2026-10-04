@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#075039">
+  <meta name="description" content="Portal de Formación Virtual del Centro Agroempresarial y Acuicola.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Formación Virtual · Centro Agroempresarial y Acuicola</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23075039'/%3E%3Cpath d='M13 21l19-9 19 9-19 9zm8 13v12c7 6 15 6 22 0V34' fill='%23b6e995'/%3E%3C/svg%3E">
+  <style>
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;background:#082e23;font-family:Arial,sans-serif}body{overflow:hidden}
+    #aplicacion{display:block;position:fixed;inset:0;width:100%;height:100%;height:100dvh;border:0;background:#f2f6f3}
+    #cargando{position:fixed;inset:0;z-index:2;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at top left,#17674b,#082e23 70%);color:#fff;text-align:center}
+    #cargando[hidden]{display:none}.tarjeta{max-width:470px;width:100%;padding:34px;border:1px solid #ffffff30;border-radius:22px;background:#ffffff0a;box-shadow:0 20px 60px #00190f33}.marca{color:#b6e995;font-size:11px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase}h1{font-size:26px;line-height:1.3;margin:16px 0 12px}p{font-size:14px;line-height:1.6;color:#d9eadd}.rueda{width:30px;height:30px;margin:24px auto;border:3px solid #ffffff30;border-top-color:#b6e995;border-radius:50%;animation:girar 1s linear infinite}.acciones{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}a,button{font:inherit}a.enlace,button{padding:12px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none}a.enlace{background:#b6e995;color:#123d28}button{border:1px solid #ffffff55;background:transparent;color:#fff}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #6bb94e;outline-offset:4px}
+    #ayuda{position:fixed;right:12px;bottom:12px;z-index:3;color:#24563b;font-size:12px;max-width:min(310px,calc(100vw - 24px))}#ayuda summary{cursor:pointer;background:#ffffffed;border:1px solid #c9dccc;border-radius:9px;padding:8px 12px;box-shadow:0 3px 15px #163b1f12;list-style:none}#ayuda[open]{background:#fff;padding:12px;border:1px solid #c9dccc;border-radius:12px;box-shadow:0 4px 22px #163b1f18}#ayuda p{color:#536e5c;font-size:12px;margin:12px 0}#ayuda a{color:#086c3b;line-height:1.8}#aviso-lento[hidden]{display:none}@keyframes girar{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.rueda{animation:none}}
+  </style>
+</head>
+<body>
+  <div id="cargando" role="status" aria-live="polite">
+    <div class="tarjeta">
+      <div class="marca">Centro Agroempresarial y Acuicola</div>
+      <h1>Formación Virtual</h1>
+      <p id="mensaje-carga">Abriendo tu espacio de trabajo…</p>
+      <div class="rueda" aria-hidden="true"></div>
+      <div id="aviso-lento" hidden>
+        <p>Si la aplicación no aparece, puedes abrir el acceso en otra ventana.</p>
+        <div class="acciones"><button type="button" id="reintentar">Reintentar</button><a class="enlace" data-acceso-directo target="_blank" rel="noopener noreferrer">Abrir aplicación</a></div>
+      </div>
+    </div>
+  </div>
+  <iframe id="aplicacion" title="Aplicación de Formación Virtual del Centro Agroempresarial y Acuicola" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <details id="ayuda">
+    <summary>Ayuda de acceso</summary>
+    <p>Si el navegador no muestra el acceso o solicita permisos de Google, abre la aplicación en otra ventana.</p>
+    <a data-acceso-directo target="_blank" rel="noopener noreferrer">Abrir aplicación en otra ventana ↗</a>
+  </details>
+  <noscript><style>#cargando{display:none}</style><p style="position:relative;z-index:5;background:#fff;padding:25px">Activa JavaScript para abrir la plataforma, o <a href="https://script.google.com/macros/s/AKfycbwduE1kQ5qLTNVqamjy-d0lKpAtuAQrw0h-pg3_Kmjz5ZAGvZdt2y8o8LjWyv47fZPaGQ/exec" target="_blank" rel="noopener noreferrer">abre la aplicación directamente</a>.</p></noscript>
+  <script>
+    'use strict';
+    const APP_URL='https://script.google.com/macros/s/AKfycbwduE1kQ5qLTNVqamjy-d0lKpAtuAQrw0h-pg3_Kmjz5ZAGvZdt2y8o8LjWyv47fZPaGQ/exec';
+    const frame=document.getElementById('aplicacion'),loading=document.getElementById('cargando');
+    let timer;
+    document.querySelectorAll('[data-acceso-directo]').forEach(a=>a.href=APP_URL);
+    function abrir(){
+      loading.hidden=false;document.getElementById('aviso-lento').hidden=true;
+      clearTimeout(timer);timer=setTimeout(()=>{document.getElementById('aviso-lento').hidden=false;document.getElementById('mensaje-carga').textContent='La conexión está tardando más de lo habitual.';},18000);
+      frame.src=APP_URL;
+    }
+    // El evento load indica carga del documento, no confirma autenticación ni permisos.
+    // El enlace de ayuda queda disponible para errores dentro del marco de Google.
+    frame.addEventListener('load',()=>{if(frame.getAttribute('src')){clearTimeout(timer);loading.hidden=true;}});
+    frame.addEventListener('error',()=>{document.getElementById('aviso-lento').hidden=false;});
+    document.getElementById('reintentar').addEventListener('click',abrir);
+    abrir();
+  </script>
+</body>
+</html>
